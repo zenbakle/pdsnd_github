@@ -100,7 +100,7 @@ def time_stats(df):
 
     print('Most Popular Start Hour:', popular_hour)
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
+    print("\nThis took {} seconds.".format(time.time() - start_time))
     print('-'*40)
 
 
@@ -138,7 +138,7 @@ def trip_duration_stats(df):
     mean_travel_time = df["Trip Duration"].mean()
     print("The Mean Travel Time Is:",mean_travel_time)
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
+    print("\nThis took {} seconds.".format(time.time() - start_time))
     print('-'*40)
 
 
@@ -171,7 +171,7 @@ def user_stats(df):
         print("Most Common Year Of Birth:", most_common)
 
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
+    print("\nThis took {} seconds.".format(time.time() - start_time))
     print('-'*40)
 
 
