@@ -7,7 +7,8 @@
 Bikeshare 
 
 ### Description
-In this project, I explored  data from a bike sharing company. the data is for three cities Chicago, New York And washington 
+In this project, I explored  data from a bike sharing company. the data is for three cities Chicago, New York And washington.
+the project gives a summary for the  frequency of use for each state, either monthly, weekly or daily.
 
 ### Files used
 the csv files used are chicago.csv, new_york_city.csv and washington.csv
