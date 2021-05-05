@@ -17,8 +17,8 @@ def get_filters():
     """
     print('Hello! Let\'s explore some US bikeshare data!')
     # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
-    cities = ["chicago", "new york city", "washington"]
-    city = input("which city's data will you like to view? Chicago, New York City or Washington\n")
+    cities = ["chicago", "new york city", "washington","all"]
+    city = input("which city's data will you like to view? Chicago, New York City, Washington or all\n")
     while city.lower().strip() not in cities:
         city = input("wrong input! Please type in any of the following cities Chicago, New York City, Washington\n")
 
@@ -40,6 +40,45 @@ def get_filters():
 
     print('-'*40)
     return city, month, day
+
+def cities_summary(month, day):
+    """
+    Loads data for the all cities and filters by month and day if applicable.
+
+    Args:
+        (str) month - name of the month to filter by, or "all" to apply no month filter
+        (str) day - name of the day of week to filter by, or "all" to apply no day filter
+    Returns:
+        df - Pandas DataFrame containing cities data filtered by month and day
+    """
+    df = pd.DataFrame()
+    for city in CITY_DATA:
+        df1 = pd.read_csv(CITY_DATA[city])
+        pd.concat([df, df1], sort=False, ignore_index=True).fillna(0)
+
+    # convert the Start Time column to datetime
+    df['Start Time'] = pd.to_datetime(df['Start Time'])
+
+    # extract month and day of week from Start Time to create new columns
+    df['month'] = df['Start Time'].dt.month
+    df['day_of_week'] = df['Start Time'].dt.day_name()
+    df['hour'] = df['Start Time'].dt.hour
+
+    # filter by month if applicable
+    if month != 'all':
+        # use the index of the months list to get the corresponding int
+        months = ['january', 'february', 'march', 'april', 'may', 'june']
+        month = months.index(month) + 1
+
+        # filter by month to create the new dataframe
+        df = df[df['month'] == month]
+
+    # filter by day of week if applicable
+    if day != 'all':
+        # filter by day of week to create the new dataframe
+        df = df[df['day_of_week'] == day.title()]
+
+    return df
 
 
 def load_data(city, month, day):
@@ -178,7 +217,10 @@ def user_stats(df):
 def main():
     while True:
         city, month, day = get_filters()
-        df = load_data(city, month, day)
+        if city == "all":
+            df = cities_summary(month, day)
+        else:
+            df = load_data(city, month, day)
 
         time_stats(df)
         station_stats(df)
